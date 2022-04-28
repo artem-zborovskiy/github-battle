@@ -3,7 +3,7 @@ import React from "react";
 export const Battle = () => {
     return(
         <div>
-            <h1>Battle</h1>
+            <h2>Battle</h2>
         </div>
     )
 }
