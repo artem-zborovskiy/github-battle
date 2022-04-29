@@ -9,7 +9,6 @@ class Popular extends React.Component {
         this.state = {
             selectedLanguage: 'All',
             repos: null,
-            isLoading : false,
             hasError: false
         }
 
@@ -19,7 +18,7 @@ class Popular extends React.Component {
     fetchHandler(language) {
         fetchPopularRepos(language)
             .then(data => {
-                this.setState({repos: data, isLoading: false, hasError: false})
+                this.setState({repos: data, hasError: false})
             })
             .catch((error) => {
                 console.error(error);
@@ -28,18 +27,15 @@ class Popular extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({isLoading: true});
         this.fetchHandler(this.state.selectedLanguage);
     }
 
     selectLanguage(language) {
-        this.setState({selectedLanguage: language, isLoading: true});
+        this.setState({selectedLanguage: language, repos: null});
         this.fetchHandler(language);
     }
 
     render() {
-        console.log('Popular trigger');
-
         if(this.state.hasError) {
             return(
                 <div>
@@ -50,10 +46,6 @@ class Popular extends React.Component {
                     <h2 className="error-msg">There was an error fetching the repositories.</h2>
                 </div>
             )
-        } else if(this.state.isLoading) {
-            return(
-                <span className="loader"></span>
-            )
         } else {
             return(
                 <div>
@@ -61,7 +53,7 @@ class Popular extends React.Component {
                         selectedLanguage = {this.state.selectedLanguage}
                         selectLanguageHandler = {this.selectLanguage}
                     />
-                    {this.state.repos ? <Repos repos={this.state.repos} /> : null}
+                    {this.state.repos ? <Repos repos={this.state.repos} /> : <span className="loader"></span>}
                 </div>
             )
         }

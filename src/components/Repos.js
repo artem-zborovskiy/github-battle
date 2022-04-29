@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from "react";
+import React, { memo } from "react";
 
 export const Repos = memo(({ repos }) => (
     <ul className="popular-list">
