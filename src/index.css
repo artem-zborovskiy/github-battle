@@ -143,3 +143,30 @@ li {
 .reset:hover {
     cursor: pointer;
 }
+
+.loader {
+    width: 60px;
+    height: 60px;
+    border: 5px solid #d0021b;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+} 
+
+.error-msg {
+    text-align: center;
+    color: #d0021b;
+    font-size: 16px;
+}
