@@ -31,8 +31,10 @@ class Popular extends React.Component {
     }
 
     selectLanguage(language) {
-        this.setState({selectedLanguage: language, repos: null});
-        this.fetchHandler(language);
+        if(language !== this.state.selectedLanguage) {
+            this.setState({selectedLanguage: language, repos: null});
+            this.fetchHandler(language);
+        }
     }
 
     render() {
