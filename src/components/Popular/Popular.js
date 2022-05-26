@@ -1,5 +1,5 @@
 import React from "react";
-import { fetchPopularRepos } from '../utils/api.js';
+import { fetchPopularRepos } from '../../utils/api.js';
 import { SelectedLanguages } from './SelectedLanguages.js';
 import { Repos } from './Repos.js';
 

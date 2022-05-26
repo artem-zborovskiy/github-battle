@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Fragment } from "react";
 import { Player } from "./Player.js";
-import { battle } from "../utils/api.js";
+import { battle } from "../../utils/api.js";
 
 const Results = (props) => {
     const [loading, setLoading] = useState(true);

@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Nav } from './Nav.js';
-import { Home } from './Home.js';
+import { Home } from './Home/Home.js';
 import { NotFound } from './NotFound.js';
-import Popular from './Popular.js';
-import Battle from './Battle.js';
-import Results from "./Results.js";
+import Popular from './Popular/Popular.js';
+import Battle from './Battle/Battle.js';
+import Results from "./Battle/Results.js";
 
 export const App = () => (
     <Router>
