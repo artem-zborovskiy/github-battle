@@ -1,30 +1,21 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useEffect, Fragment } from "react";
 import { Player } from "./Player.js";
-import { battle } from "../../utils/api.js";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchResults } from "../../redux/thunk/results.thunk.js";
 
 const Results = (props) => {
-    const [loading, setLoading] = useState(true);
-    const [winner, setWinner] = useState(null);
-    const [loser, setLoser] = useState(null);
-    const [error, setError] = useState(null);
+    const dispatch = useDispatch();
+    const winner = useSelector(state => state.resultsReducer.winner);
+    const loser = useSelector(state => state.resultsReducer.loser);
+    const error = useSelector(state => state.resultsReducer.error);
+    const loading = useSelector(state => state.resultsReducer.loading);
 
     useEffect(() => {
         const searchParams = new URLSearchParams(props.location.search);
         const playerOneName = searchParams.get('playerOneName');
         const playerTwoName = searchParams.get('playerTwoName');
 
-        battle([playerOneName, playerTwoName])
-            .then(([winner, loser]) => {
-                if(winner && loser) {
-                    setWinner(winner);
-                    setLoser(loser);
-                } else {
-                    setError('Looks like there is an error. Check both users!');
-                }
-            })
-            .finally(() => {
-                setLoading(false);
-            })
+        dispatch(fetchResults([playerOneName, playerTwoName]));
     }, []);
 
     if(error) {
