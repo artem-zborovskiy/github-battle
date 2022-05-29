@@ -1,48 +1,43 @@
 import React from "react";
-import { fetchPopularRepos } from '../../utils/api.js';
+import { connect } from "react-redux";
 import { SelectedLanguages } from './SelectedLanguages.js';
 import { Repos } from './Repos.js';
+import { setSelectedLanguage } from "../../redux/actions/popular.actions.js";
+import { fetchPopularReposThunk } from '../../redux/thunk/popular.thunk.js';
+
+const mapStateToProps = ({popularReducer}) => ({
+    selectedLanguage: popularReducer.selectedLanguage,
+    repos: popularReducer.repos,
+    error: popularReducer.error
+});
 
 class Popular extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            selectedLanguage: 'All',
-            repos: null,
-            hasError: false
-        }
-
         this.selectLanguage = this.selectLanguage.bind(this);
     }
 
-    fetchHandler(language) {
-        fetchPopularRepos(language)
-            .then(data => {
-                this.setState({repos: data, hasError: false})
-            })
-            .catch((error) => {
-                console.error(error);
-                this.setState({hasError: true});
-            })
+    componentDidMount() {
+        this.fetchHandler(this.props.selectedLanguage);
     }
 
-    componentDidMount() {
-        this.fetchHandler(this.state.selectedLanguage);
+    fetchHandler(language) {
+        this.props.dispatch(fetchPopularReposThunk(language));
     }
 
     selectLanguage(language) {
-        if(language !== this.state.selectedLanguage) {
-            this.setState({selectedLanguage: language, repos: null});
+        if(language !== this.props.selectedLanguage) {
+            this.props.dispatch(setSelectedLanguage(language));
             this.fetchHandler(language);
         }
     }
 
     render() {
-        if(this.state.hasError) {
+        if(this.props.error) {
             return(
                 <div>
                     <SelectedLanguages
-                        selectedLanguage = {this.state.selectedLanguage}
+                        selectedLanguage = {this.props.selectedLanguage}
                         selectLanguageHandler = {this.selectLanguage}
                     />
                     <h2 className="error-msg">There was an error fetching the repositories.</h2>
@@ -52,14 +47,14 @@ class Popular extends React.Component {
             return(
                 <div>
                     <SelectedLanguages
-                        selectedLanguage = {this.state.selectedLanguage}
+                        selectedLanguage = {this.props.selectedLanguage}
                         selectLanguageHandler = {this.selectLanguage}
                     />
-                    {this.state.repos ? <Repos repos={this.state.repos} /> : <span className="loader"></span>}
+                    {this.props.repos ? <Repos repos={this.props.repos} /> : <span className="loader"></span>}
                 </div>
             )
         }
     }
 }
 
-export default Popular;
+export default connect(mapStateToProps)(Popular);
