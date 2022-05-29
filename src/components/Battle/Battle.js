@@ -1,37 +1,33 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import PlayerInput from "./PlayerInput.js";
 import PlayerPreview from "./PlayerPreview.js";
+import { setPlayer, doReset } from "../../redux/actions/battle.actions.js";
+
+const mapStateToProps = ({battleReducer}) => ({
+    playerOneName: battleReducer.playerOneName,
+    playerOneImg: battleReducer.playerOneImg,
+    playerTwoName: battleReducer.playerTwoName,
+    playerTwoImg: battleReducer.playerTwoImg
+});
 
 class Battle extends React.Component {
     constructor() {
         super();
-        this.state = {
-            playerOneName: '',
-            playerOneImg: null,
-            playerTwoName: '',
-            playerTwoImg: null
-        }
-
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleSubmit(id, username) {
-        this.setState({
-            [id + 'Name']: username,
-            [id + 'Img']: `https://github.com/${username}.png?size200`
-        });
+        this.props.dispatch(setPlayer(id, username));
     }
 
     handleReset(id) {
-        this.setState({
-            [id + 'Name']: '',
-            [id + 'Img']: null
-        });
+        this.props.dispatch(doReset(id));
     }
 
     render() {
-        const { playerOneName, playerTwoName, playerOneImg, playerTwoImg } = this.state;
+        const { playerOneName, playerTwoName, playerOneImg, playerTwoImg } = this.props;
 
         return(
             <div>
@@ -77,4 +73,4 @@ class Battle extends React.Component {
     }
 }
 
-export default Battle;
+export default connect(mapStateToProps)(Battle);
