@@ -1,10 +1,12 @@
 {
+  "homepage": "https://artem-zborovskiy.github.io/github-battle/",
   "name": "github_battle",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --open"
+    "start": "webpack-dev-server --open",
+    "build": "webpack"
   },
   "author": "",
   "license": "ISC",
