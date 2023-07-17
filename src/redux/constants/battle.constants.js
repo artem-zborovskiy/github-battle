@@ -1,0 +1,4 @@
+export const BATTLE_ENTITY = {
+    SET_PLAYER: 'SET_PLAYER',
+    DO_RESET: 'DO_RESET'
+}
