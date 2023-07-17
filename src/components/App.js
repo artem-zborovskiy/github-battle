@@ -8,7 +8,7 @@ import Battle from './Battle/Battle.js';
 import Results from "./Battle/Results.js";
 
 export const App = () => (
-    <Router>
+    <Router basename="/github-battle">
         <div className="container">
             <Nav />
             <Switch>

@@ -21099,7 +21099,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var App = exports.App = function App() {
     return _react2.default.createElement(
         _reactRouterDom.BrowserRouter,
-        null,
+        { basename: "/github-battle" },
         _react2.default.createElement(
             "div",
             { className: "container" },
